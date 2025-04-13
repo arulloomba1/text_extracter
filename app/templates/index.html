@@ -53,9 +53,23 @@
                 </form>
 
                 <div id="result" class="mt-6 hidden">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Extracted Text:</label>
-                    <div class="bg-gray-50 rounded-md p-4">
-                        <pre id="extractedText" class="text-sm text-gray-800 whitespace-pre-wrap"></pre>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-lg font-medium text-gray-900">Extracted Text</h3>
+                                <button id="copyButton" class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                                    </svg>
+                                    Copy Text
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="bg-gray-50 rounded-lg p-4 max-h-96 overflow-y-auto">
+                                <pre id="extractedText" class="text-sm text-gray-800 whitespace-pre-wrap font-mono"></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -8,6 +8,48 @@ document.addEventListener('DOMContentLoaded', function() {
     const statusBanner = document.getElementById('statusBanner');
     const statusIcon = document.getElementById('statusIcon');
     const statusMessage = document.getElementById('statusMessage');
+    const copyButton = document.getElementById('copyButton');
+
+    // Function to format text with proper spacing and line breaks
+    function formatText(text) {
+        // Remove excessive whitespace while preserving paragraphs
+        return text
+            .replace(/\n\s*\n\s*\n/g, '\n\n')  // Replace multiple empty lines with double line break
+            .replace(/[ \t]+/g, ' ')            // Replace multiple spaces/tabs with single space
+            .trim();                            // Remove leading/trailing whitespace
+    }
+
+    // Function to handle copy button click
+    async function handleCopyClick() {
+        try {
+            await navigator.clipboard.writeText(extractedText.textContent);
+            copyButton.innerHTML = `
+                <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Copied!
+            `;
+            copyButton.classList.remove('text-blue-700', 'bg-blue-100', 'hover:bg-blue-200');
+            copyButton.classList.add('text-green-700', 'bg-green-100', 'hover:bg-green-200');
+            
+            setTimeout(() => {
+                copyButton.innerHTML = `
+                    <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                    </svg>
+                    Copy Text
+                `;
+                copyButton.classList.remove('text-green-700', 'bg-green-100', 'hover:bg-green-200');
+                copyButton.classList.add('text-blue-700', 'bg-blue-100', 'hover:bg-blue-200');
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+            showStatus('error', 'Failed to copy text to clipboard');
+        }
+    }
+
+    // Add copy button click handler
+    copyButton.addEventListener('click', handleCopyClick);
 
     function showStatus(type, message) {
         const icons = {
@@ -79,8 +121,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const data = await response.json();
             
-            // Show the result
-            extractedText.textContent = data.text;
+            // Format and show the result
+            extractedText.textContent = formatText(data.text);
             result.classList.remove('hidden');
             
             // Update status
