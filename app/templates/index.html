@@ -3,79 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File to Text Converter</title>
+    <title>Resume Analyzer</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50">
-    <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md mx-auto">
-            <div class="text-center">
-                <h1 class="text-3xl font-bold text-gray-900">File to Text Converter</h1>
-                <p class="mt-2 text-sm text-gray-600">Upload a file (PDF, DOC, DOCX) to extract its text content</p>
-            </div>
-
-            <div class="mt-8 bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                <form id="resumeForm" class="space-y-6" enctype="multipart/form-data">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">
-                            File Upload
-                        </label>
-                        <div id="dropZone" class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500 transition-colors">
-                            <input type="file" id="resumeFile" name="file" accept=".pdf,.doc,.docx" class="hidden">
-                            <div class="space-y-2">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <div class="text-gray-600">
-                                    <span class="font-medium">Click to upload</span> or drag and drop
-                                </div>
-                                <p class="text-xs text-gray-500">PDF, DOC, or DOCX (MAX. 10MB)</p>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-3xl font-bold text-center mb-8">Resume Analyzer</h1>
+            
+            <form id="resumeForm" class="space-y-6" enctype="multipart/form-data">
+                <!-- File Upload Section -->
+                <div class="bg-white shadow rounded-lg p-6">
+                    <div id="dropZone" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 transition-colors relative">
+                        <input type="file" id="resume" name="file" accept=".pdf,.doc,.docx" class="opacity-0 absolute w-full h-full top-0 left-0 cursor-pointer">
+                        <div class="space-y-2">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div class="text-gray-600">
+                                <span class="font-medium">Click to upload</span> or drag and drop
                             </div>
-                        </div>
-                        <div id="fileInfo" class="mt-2 text-sm text-gray-600 hidden"></div>
-                    </div>
-
-                    <!-- Status Banner -->
-                    <div id="statusBanner" class="hidden rounded-md p-4 mt-4">
-                        <div class="flex">
-                            <div id="statusIcon" class="flex-shrink-0"></div>
-                            <div class="ml-3">
-                                <p id="statusMessage" class="text-sm font-medium"></p>
-                            </div>
+                            <p class="text-xs text-gray-500">PDF, DOC, or DOCX (MAX. 10MB)</p>
                         </div>
                     </div>
+                    <p id="fileInfo" class="mt-2 text-sm text-gray-600 hidden"></p>
+                </div>
 
-                    <div>
-                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Convert to Text
-                        </button>
-                    </div>
-                </form>
+                <!-- Job Description Section -->
+                <div class="bg-white shadow rounded-lg p-6">
+                    <label for="jobDescription" class="block text-sm font-medium text-gray-700 mb-2">Job Description</label>
+                    <textarea id="jobDescription" name="job_description" rows="6" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Paste the job description here..."></textarea>
+                </div>
 
-                <div id="result" class="mt-6 hidden">
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                        <div class="px-6 py-4 border-b border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-medium text-gray-900">Extracted Text</h3>
-                                <button id="copyButton" class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                    <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
-                                    </svg>
-                                    Copy Text
-                                </button>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="bg-gray-50 rounded-lg p-4 max-h-96 overflow-y-auto">
-                                <pre id="extractedText" class="text-sm text-gray-800 whitespace-pre-wrap font-mono"></pre>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Submit Button -->
+                <div class="flex justify-center">
+                    <button type="submit" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Analyze Resume
+                    </button>
+                </div>
+            </form>
+
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="hidden mt-8">
+                <div class="flex justify-center">
+                    <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
                 </div>
             </div>
+
+            <!-- Results Section -->
+            <div id="results" class="hidden mt-8"></div>
         </div>
     </div>
 
-    <script src="{{ url_for('static', path='js/main.js') }}"></script>
+    <script src="/static/js/main.js"></script>
 </body>
 </html> 
