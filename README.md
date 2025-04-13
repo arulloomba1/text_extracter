@@ -1,6 +1,6 @@
 # File to Text Converter
 
-Simple web application that extracts text content from PDF, DOC, and DOCX files. Built with FastAPI.
+Simple web application that extracts text content from PDF, DOC, and DOCX files. Built with FastAPI. Currently working on and supporting functionality for job description analysis using langchain, llama model (inputs: job description and resume; output: match %/suggestions)
 
 ## Features
 
