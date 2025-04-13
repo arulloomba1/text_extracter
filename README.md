@@ -1,13 +1,14 @@
 # File to Text Converter
 
-A simple web application that extracts text content from PDF, DOC, and DOCX files. Built with FastAPI and modern web technologies.
+Simple web application that extracts text content from PDF, DOC, and DOCX files. Built with FastAPI.
 
 ## Features
 
-- Upload PDF, DOC, and DOCX files through a modern drag-and-drop interface
-- Extract text content from uploaded files
-- Support for multiple file formats
-- Real-time status updates and error handling
+- Upload PDF, DOC, and DOCX files through drag-and-drop interface (can also open file explorer, etc)
+- Extract text content from uploaded files (currently only supports single files)
+- Support for multiple file formats (PDF, DOC, DOCX)
+- Up to 10 MB
+- Error-handling
 - Clean and responsive user interface
 
 ## Technologies Used
@@ -16,18 +17,16 @@ A simple web application that extracts text content from PDF, DOC, and DOCX file
   - FastAPI (Python web framework)
   - PyPDF2 (PDF text extraction)
   - python-docx (DOC/DOCX text extraction)
-  - Uvicorn (ASGI server)
-
 - **Frontend:**
   - HTML5
-  - JavaScript (Vanilla)
-  - Tailwind CSS (Styling)
+  - JavaScript
+  - Tailwind CSS 
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone <your-repository-url>
+git clone <repository-url>
 cd file-to-text-converter
 ```
 
