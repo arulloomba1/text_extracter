@@ -12,7 +12,7 @@ from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 from langchain_community.llms import LlamaCpp
-import json
+import json 
 import os
 
 app = FastAPI()
